@@ -6,9 +6,9 @@ var mathBox = {
 		var nextNumber = number - 1;
 		//  Validate the input
 		try {
-			if (typeof number != "number") { throw this.errors.undef; } 
+			if (!this.conditions.isNumber( number )) { throw this.errors.undef; } 
 
-			if (typeof number == "number" && number < 0) { throw this.errors.negative; }
+			if (this.conditions.isNegative( number )) { throw this.errors.negative; }
 		}
 		//  React to invalid input
 		catch(err) {
@@ -22,44 +22,22 @@ var mathBox = {
 		//  The recursive case
 		return this.factorial( nextNumber ) * number;
 	},
-
 	//  Find the combinations of 'n' items taken 'r' at a time 
-	combinations: function( choices, spots ) {
-		try {
-			if (typeof choices != "number" || typeof spots != "number") { 
-				throw this.errors.undef; 
-			}
-
-			if ((typeof choices == "number" && choices < 0) || (typeof spots == "number" && spots <0)) {
-				throw this.errors.negative;
-			}
-		}
-		catch(err) {
-			console.log(err);
-			return false;
-		}
-		return this.factorial( choices ) / ( this.factorial( choices - spots) * this.factorial( spots ) );
-	},
+	combinations: function( choices, spots ) { return this.factorial( choices ) / ( this.factorial( choices - spots) * this.factorial( spots ) ); },
 	//  Finds the number of permutations given a certain number of choice for a certain number of spots
-	permutations: function( choices, spots) {
-		try {
-			if (typeof choices != "number" || typeof spots != "number") { 
-				throw this.errors.undef; 
-			}
-
-			if ((typeof choices == "number" && choices < 0) || (typeof spots == "number" && spots <0)) {
-				throw this.errors.negative;
-			}
-		}
-		catch(err) {
-			console.log(err);
-			return false;
-		}
-		return this.factorial( choices ) / this.factorial( choices - spots) ;
-	},
+	permutations: function( choices, spots) { return this.factorial( choices ) / this.factorial( choices - spots); },
 	//  brute force algorithm to find factors 
 	findFactorsOf: function( number ) {
 		factors = []
+		try {
+			if ( !this.conditions.isNumber( number ) ) { throw this.errors.undef; }
+
+			if (this.conditions.isNegative( number )) { throw this.errors.negative; }
+		}
+		catch(err) {
+			console.log(err);
+			return false;
+		}
 		for (var i=1; i<(number+1); i++) {
 			if ( number % i == 0) {
 				factors.push(i);
@@ -67,7 +45,7 @@ var mathBox = {
 		}
 		return factors;
 	},
-	//  brute force algorithm to find the greatest common factor
+	//  derived from findFactorsOf via more brute force
 	greatestCommonFactor: function( number1, number2 ) {
 		var factors1 = this.findFactorsOf( number1 );
 		var factors2 = this.findFactorsOf( number2 );
@@ -81,6 +59,7 @@ var mathBox = {
 		}
 		return GCF;
 	},
+	//  derived from findFactorsOf via more brute force
 	leastCommonMultiple: function( number1, number2 ) {
 		var larger = number1;
 		var smaller = number2;
@@ -99,6 +78,7 @@ var mathBox = {
 			}
 		}
 	},
+	//  derived from findFactorsOf via more brute force
 	findPrimeFactors: function( number ) {
 		var primeFactors = [];
 		var factors = this.findFactorsOf( number );
@@ -109,6 +89,7 @@ var mathBox = {
 		}
 		return primeFactors;
 	},
+	//  custom error conditions 
 	conditions: {
 		isNumber: function( entry ) {
 			if (typeof entry != "number") {
@@ -125,7 +106,7 @@ var mathBox = {
 			}
 		}
 	},
-
+	//  custom error messages
 	errors: {
 		undef: "That's not a number",
 		negative: "Undefined for negative numbers"
