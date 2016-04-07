@@ -1,7 +1,7 @@
 
 
 var mathBox = {
-	//  Find the factorial of a number 
+	//  Find the factorial of a number (recursive solution)
 	factorial: function( number ) {
 		var nextNumber = number - 1;
 		//  Validate the input
@@ -59,7 +59,7 @@ var mathBox = {
 		}
 		return GCF;
 	},
-	//  derived from findFactorsOf via more brute force
+	//  derived from findFactorsOf via more brute force (Iterative solution)
 	leastCommonMultiple: function( number1, number2 ) {
 		var larger = number1;
 		var smaller = number2;
@@ -82,6 +82,13 @@ var mathBox = {
 	findPrimeFactors: function( number ) {
 		var primeFactors = [];
 		var factors = this.findFactorsOf( number );
+		try {
+			if ( this.conditions.tooBig(number) ) { throw this.errors.tooBig; }
+		}
+		catch(err) {
+			console.log(err);
+			return false;
+		}
 		for (var i=0; i<factors.length; i++) {
 			if (this.findFactorsOf(factors[i]).length == 2) {
 				primeFactors.push( factors[i] );
@@ -89,7 +96,7 @@ var mathBox = {
 		}
 		return primeFactors;
 	},
-	//  custom error conditions 
+	//  custom error booleans 
 	conditions: {
 		isNumber: function( entry ) {
 			if (typeof entry != "number") {
@@ -104,11 +111,19 @@ var mathBox = {
 			} else {
 				return false;
 			}
+		},
+		tooBig: function ( entry ) {
+			if (typeof entry == "number" && entry > 25000000) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	},
 	//  custom error messages
 	errors: {
 		undef: "That's not a number",
-		negative: "Undefined for negative numbers"
+		negative: "Undefined for negative numbers",
+		tooBig:  "Too big, bro"
 	}
 }
