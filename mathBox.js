@@ -45,7 +45,7 @@ var mathBox = {
 		}
 		return factors;
 	},
-	//  derived from findFactorsOf via more brute force
+	//  derived from findFactorsOf via more brute force (Iterative solution)
 	greatestCommonFactor: function( number1, number2 ) {
 		var factors1 = this.findFactorsOf( number1 );
 		var factors2 = this.findFactorsOf( number2 );
@@ -96,6 +96,30 @@ var mathBox = {
 		}
 		return primeFactors;
 	},
+	//  [  ]  FINISH writing the function below
+	//		[  ]  Devise a way to deal with negative numbers
+	//  returns the factored form of polynomial ax^2 + bx + c (if factorable)
+	factorQuadratic: function( a, b, c) {
+		var constantFactors = this.findFactorsOf( c );
+		var leadFactors = this.findFactorsOf( a );
+		var n1, n2, n3, n4;
+		for (var i = 0; i < constantFactors.length; i++) {
+			n1 = constantFactors[i];
+			n2 = c / n1;
+			for (var j = 0; j < leadFactors.length; j++) {
+				n3 = leadFactors[j];
+				n4 = a / n3;
+			}
+		}
+
+	},
+	solveQuadratic: function( a, b, c ) {
+		var discriminant = b^2 - (4*a*c);
+		var real = -1*b/(2*a);
+		if (discriminant < 0) { 
+			return 'x=' + real + "+" + ((-1*discriminant)^.5)/(2*a) + "i, x=" + real + "-" ((-1*discriminant)^.5)/(2*a) + "i";
+		}
+	}
 	//  custom error booleans 
 	conditions: {
 		isNumber: function( entry ) {
