@@ -1,4 +1,4 @@
-
+"use strict";
 
 var mathBox = {
 	//  Find the factorial of a number (recursive solution)
@@ -119,29 +119,28 @@ var mathBox = {
 		if (discriminant < 0) { 
 			return 'x=' + real + "+" + ((-1*discriminant)^.5)/(2*a) + "i, x=" + real + "-" ((-1*discriminant)^.5)/(2*a) + "i";
 		}
-	}
+	},
 	//  custom error booleans 
 	conditions: {
 		isNumber: function( entry ) {
 			if (typeof entry != "number") {
 				return false;
-			} else {
-				return true;
-			}
+			} 
+			return true;
+			
 		},
 		isNegative: function( entry ) {
 			if (typeof entry == "number" && entry < 0) {
 				return true;
-			} else {
-				return false;
-			}
+			} 
+			return false;
+		
 		},
 		tooBig: function ( entry ) {
 			if (typeof entry == "number" && entry > 25000000) {
 				return true;
-			} else {
-				return false;
-			}
+			} 
+			return false;
 		}
 	},
 	//  custom error messages

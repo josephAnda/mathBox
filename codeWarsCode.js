@@ -180,11 +180,9 @@ var Harshad = ( function() {
         currentNumber = this.getNext( currentNumber );
       }
       return suite;
-      
     },
-
-    }
-  };
+  }
+})();	
 
 function titleCase(title, minorWords) {
   var titleWords = title.split(" ");
@@ -205,4 +203,40 @@ function validatePIN (pin) {
   return isNaN(Number(pin)) || (Number(pin).toString().length != 4 && Number(pin).toString().length != 6) ? false : true;
 }
 
-} () );	
+
+//  Methods below were to extend the array class to apply certain functions to all elements  
+Array.prototype.square = function() {
+  return this.map(function(val) {
+    return val * val;
+  });
+}
+
+Array.prototype.cube = function() {
+  return this.map(function(val) {
+    return val * val * val;
+  });
+}
+
+Array.prototype.average = function() {
+  if (!this.length) { return NaN; }
+  //  sums all values in the array 
+  sum = this.reduce(function(prev, current) {
+    return prev + current;
+  });
+  //  calculates average 
+  return sum / this.length;
+}
+
+Array.prototype.sum = function() {
+  return this.reduce(function(prev, current) {
+    return prev + current;
+  });
+}
+
+Array.prototype.even = function() {
+  return this.filter(function(x) { return x % 2 == 0; });
+}
+
+Array.prototype.odd = function() {
+  return this.filter(function(x) { return x % 2 != 0; });
+}
